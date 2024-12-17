@@ -41,4 +41,49 @@ def list_students(students):
         print(f"ID: {student['id']}, Name: {student['name']}, DoB: {student['dob']}")
     print()
 
+def show_student_marks(marks):
+    print("Student Marks:")
+    for student_id, mark_info in marks.items():
+        print(f"Student ID: {student_id}, Course: {mark_info['course']}, Mark: {mark_info['mark']}")
+    print()
 
+def main():
+    num_students = number_students()
+    students = students_info(num_students)
+
+    num_courses = number_courses()
+    courses = courses_info(num_courses)
+
+    marks_data = {}
+    while True:
+        print("\nMenu:")
+        print("1. List all courses")
+        print("2. List all students")
+        print("3. Input marks for a course")
+        print("4. Show student marks")
+        print("5. Exit")
+
+        choice = input("Choose an option: ")
+        if choice == "1":
+            list_courses(courses)
+        elif choice == "2":
+            list_students(students)
+        elif choice == "3":
+            list_courses(courses)
+            course_id = input("Select course by ID: ")
+            selected_course = next((course for course in courses if course["id"] == course_id), None)
+            if selected_course:
+                course_marks = marks(students, selected_course)
+                marks_data.update(course_marks)
+            else:
+                print("Invalid course ID.")
+        elif choice == "4":
+            show_student_marks(marks_data, courses)
+        elif choice == "5":
+            print("Exiting program.")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+if __name__ == "__main__":
+    main()
